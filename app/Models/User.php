@@ -106,7 +106,7 @@ class User extends Authenticatable
              $query->with(['invoices' => function ($q) {
                         $q->selectRaw('YEAR(data_emissao) as year')
                          ->selectRaw('MONTH(data_emissao) as month')
-                         ->selectraw('SUM(valo - ((total_imp_inc / 100) * valor)) as income')
+                         ->selectraw('SUM(valor - ((total_imp_inc / 100) * valor)) as income')
                          ->selectraw('SUM((comissao_cn / 100) * (valor - (total_imp_inc / 100) * total )) as commission')
                          ->groupBy('cao_os.co_usuario', 'year', 'month');
                     }]);

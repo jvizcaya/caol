@@ -55,7 +55,9 @@
                     <div class="form-group">
                         <select class="duallistbox" id="duallistbox" multiple="multiple" style="display: none;">
                           @foreach($users as $user)
-                          <option value="{{ $user->co_usuario }}">{{ $user->no_usuario }}</option>
+                          <option value="{{ $user->co_usuario }}" {{ in_array($user->co_usuario, explode(',', request()->values)) ? 'selected' : '' }}>
+                            {{ $user->no_usuario }}
+                          </option>
                           @endforeach
                         </select>
                       </div>
@@ -81,79 +83,7 @@
     </section>
 
     @if(request()->filled(['q', 'values']))
-
-    @if(request()->q == '1')
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-12">
-
-            <div class="card card-default">
-              <div class="card-header">
-                <h3 class="card-title">Consultores</h3>
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="form-group">
-
-                      @foreach($users as $user)
-                        @if(in_array($user->co_usuario, explode(',', request()->values)))
-                        <table class="table table-bordered table-sm">
-                          <thead>
-                            <th colspan="5">{{ $user->no_usuario }}</th>
-                          </thead>
-                          <thead>
-                            <tr>
-                              <th>Período</th>
-                              <th>Receita Líquida</th>
-                              <th>Custo Fixo</th>
-                              <th>Comissão</th>
-                              <th>Lucro</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            @foreach($user->invoices as $invoice)
-                            <tr>
-                              <td>{{ month_day($invoice->month).', '.$invoice->year }}</td>
-                              <td>{{ fn($invoice->income) }}</td>
-                              <td>{{ $user->salary ? fn($user->salary->brut_salario) : ''}}</td>
-                              <td>{{ fn($invoice->commission) }}</td>
-                              <td></td>
-                            </tr>
-                            @endforeach
-                            <tr>
-                              <th>SALDO</th>
-                              <td>{{ fn($user->invoices->sum('income')) }}</td>
-                              <td>{{ $user->salary ? fn($user->salary->brut_salario * $user->invoices->count()) : ''}}</td>
-                              <td>{{ fn($user->invoices->sum('commission')) }}</td>
-                              <td></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        @endif
-                      @endforeach
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- /.card-body -->
-              <div class="card-footer">
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
-    @endif
-
+        @includeWhen(request()->q == 1, 'subviews.list_report')
     @endif
 
 @endsection

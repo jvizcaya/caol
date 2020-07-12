@@ -68,5 +68,7 @@ function fn($amount)
  */
 function calculate_profit($income, $salary, $commission)
 {
-      $profit = $income - ($salary + $commission);   
+      $profit = $income - ($salary + $commission);
+
+      return fn($profit);  
 }

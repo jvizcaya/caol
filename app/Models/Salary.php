@@ -14,4 +14,6 @@ class Salary extends Model
      */
     protected $table = 'cao_salario';
 
+    
+
 }
