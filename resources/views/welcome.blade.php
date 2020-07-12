@@ -122,7 +122,7 @@
                               <td>{{ month_day($invoice->month).', '.$invoice->year }}</td>
                               <td>{{ fn($invoice->income) }}</td>
                               <td>{{ $user->salary ? fn($user->salary->brut_salario) : ''}}</td>
-                              <td></td>
+                              <td>{{ fn($invoice->commission) }}</td>
                               <td></td>
                             </tr>
                             @endforeach
@@ -130,7 +130,7 @@
                               <th>SALDO</th>
                               <td>{{ fn($user->invoices->sum('income')) }}</td>
                               <td>{{ $user->salary ? fn($user->salary->brut_salario * $user->invoices->count()) : ''}}</td>
-                              <td></td>
+                              <td>{{ fn($user->invoices->sum('commission')) }}</td>
                               <td></td>
                             </tr>
                           </tbody>

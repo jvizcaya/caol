@@ -57,7 +57,16 @@ function month_day($month)
  */
 function fn($amount)
 {
+    return "R$ ".number_format($amount, 2, ',', '.');
+}
 
-    return "R$ ".number_format($amount, 2, ',', '.');      
-
+/**
+ *  calculate profit
+ *  @param number $amount
+ *
+ * @return string  formatted amount string
+ */
+function calculate_profit($income, $salary, $commission)
+{
+      $profit = $income - ($salary + $commission);   
 }
