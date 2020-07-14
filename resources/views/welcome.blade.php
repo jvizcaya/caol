@@ -29,7 +29,7 @@
       <div class="row mb-4">
         <div class="col-md-6">
           <div class="btn-group">
-            <a href="#" class="btn btn-primary"><i class="fas fa-user"></i> Por consultor</a>
+            <a href="{{ url('/') }}" class="btn btn-primary"><i class="fas fa-user"></i> Por consultor</a>
             <a href="#" class="btn btn-primary" ><i class="fas fa-user-circle"></i> Por cliente</a>
           </div>
         </div>
@@ -82,8 +82,9 @@
       </div>
     </section>
 
-    @if(request()->filled(['q', 'values']))
+    @if(request()->filled(['q', 'values']) && $invoices->count())
         @includeWhen(request()->q == 1, 'subviews.list_report')
+        @includeWhen(request()->q == 2, 'subviews.grafic_bar')
     @endif
 
 @endsection

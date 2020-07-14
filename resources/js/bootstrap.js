@@ -13,6 +13,7 @@ try {
     require('bootstrap');
     require('admin-lte');
     require('bootstrap4-duallistbox');
+    require('chart.js');
 } catch (e) {}
 
 /**

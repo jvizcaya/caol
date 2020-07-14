@@ -82,15 +82,13 @@ class User extends Authenticatable
      */
     public function scopeRole($query)
     {
-        if(request()->filled(['q', 'values'])){
-
-            $query->whereHas('permissions', function (Builder $q) {
+          $query->whereHas('permissions', function (Builder $q) {
                   $q->whereIn('co_tipo_usuario', [0,1,2])
-                                ->where('co_sistema', 1)
-                                ->where('in_ativo', 'S');
-                });
+                      ->where('co_sistema', 1)
+                      ->where('in_ativo', 'S');
+          });
 
-        }
+
     }
 
     /**
@@ -103,13 +101,14 @@ class User extends Authenticatable
      {
           if(request()->filled(['q', 'values'])){
 
-             $query->with(['invoices' => function ($q) {
-                        $q->selectRaw('YEAR(data_emissao) as year')
-                         ->selectRaw('MONTH(data_emissao) as month')
-                         ->selectraw('SUM(valor - ((total_imp_inc / 100) * valor)) as income')
-                         ->selectraw('SUM((comissao_cn / 100) * (valor - (total_imp_inc / 100) * total )) as commission')
-                         ->groupBy('cao_os.co_usuario', 'year', 'month');
-                    }]);
+            $query->whereIn('co_usuario', explode(',', request()->values))
+                  ->with(['invoices' => function ($q) {
+                    $q->selectRaw('YEAR(data_emissao) as year')
+                     ->selectRaw('MONTH(data_emissao) as month')
+                     ->selectraw('SUM(valor - ((total_imp_inc / 100) * valor)) as income')
+                     ->selectraw('SUM((comissao_cn / 100) * (valor - (total_imp_inc / 100) * total )) as commission')
+                     ->groupBy('cao_os.co_usuario', 'year', 'month');
+                }]);
           }
      }
 

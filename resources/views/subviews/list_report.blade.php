@@ -16,11 +16,10 @@
               <div class="col-12">
                 <div class="form-group">
 
-                  @foreach($users as $user)
-                    @if(in_array($user->co_usuario, explode(',', request()->values)))
+                  @foreach($invoices as $user_data)
                     <table class="table table-bordered table-sm">
                       <thead class="table-secondary">
-                        <th colspan="5">{{ $user->no_usuario }}</th>
+                        <th colspan="5">{{ $user_data->no_usuario }}</th>
                       </thead>
                       <thead>
                         <tr>
@@ -32,27 +31,25 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($user->invoices as $invoice)
+                        @foreach($user_data->invoices as $invoice)
                         <tr>
                           <td>{{ month_day($invoice->month).', '.$invoice->year }}</td>
                           <td>{{ fn($invoice->income) }}</td>
-                          <td>{{ fn($user->salary->brut_salario) }}</td>
+                          <td>{{ fn($user_data->salary->brut_salario) }}</td>
                           <td>{{ fn($invoice->commission) }}</td>
-                          <td>{{ calculate_profit($invoice->income, $user->salary->brut_salario, $invoice->commission) }}</td>
+                          <td>{{ calculate_profit($invoice->income, $user_data->salary->brut_salario, $invoice->commission) }}</td>
                         </tr>
                         @endforeach
                         <tr class="table-secondary">
                           <th>SALDO</th>
-                          <th>{{ fn($user->invoices->sum('income')) }}</th>
-                          <th>{{ fn($user->salary->brut_salario * $user->invoices->count()) }}</th>
-                          <th>{{ fn($user->invoices->sum('commission')) }}</th>
-                          <th>{{ calculate_profit($user->invoices->sum('income'), $user->salary->brut_salario * $user->invoices->count(), $user->invoices->sum('commission')) }}</th>
+                          <th>{{ fn($user_data->invoices->sum('income')) }}</th>
+                          <th>{{ fn($user_data->salary->brut_salario * $user_data->invoices->count()) }}</th>
+                          <th>{{ fn($user_data->invoices->sum('commission')) }}</th>
+                          <th>{{ calculate_profit($user_data->invoices->sum('income'), $user_data->salary->brut_salario * $user_data->invoices->count(), $user_data->invoices->sum('commission')) }}</th>
                         </tr>
                       </tbody>
                     </table>
-                    @endif
                   @endforeach
-
                 </div>
               </div>
             </div>
