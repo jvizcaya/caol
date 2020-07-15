@@ -3,7 +3,7 @@
 *  Create dataset for bar char
 *
 */
-function createDatasets(data) {
+function createBarData(data) {
 
     var dataset = [];
 
@@ -34,10 +34,13 @@ function createDatasets(data) {
 function generateData(data){
 
     var values = [];
+    
+    for (var i = 1; i <= 12; i++){
+      let value = _.find(data, function(o) { return o.month == i; });
+      let dataPush = value ? value.income.toFixed(2) : 0;
 
-    data.forEach(function(element){
-      values.push(element.income.toFixed(2));
-    });
+      values.push(dataPush);
+    }
 
     return values;
 }
@@ -49,14 +52,85 @@ function generateData(data){
 function setColor(value){
 
     var colors = [
-      'rgba(255, 0, 0, 0.2)',
-      'rgba(0, 0, 255, 0.2)',
-      'rgba(60, 179, 113, 0.2)',
-      'rgba(238, 130, 238, 0.2)',
-      'rgba(255, 165, 0, 0.2)',
-      'rgba(106, 90, 205, 0.2)',
-      'rgba(255, 99, 71, 0.2)'
+      'rgba(255, 0, 0, 0.3)',
+      'rgba(0, 0, 255, 0.3)',
+      'rgba(60, 179, 113, 0.3)',
+      'rgba(238, 130, 238, 0.3)',
+      'rgba(255, 165, 0, 0.3)',
+      'rgba(106, 90, 205, 0.3)',
+      'rgba(255, 99, 71, 0.3)'
     ];
 
     return colors[value];
+}
+
+/**
+ * calculate average salary
+ *
+ */
+function average_salary(data){
+
+    var avg = _.meanBy(data, function(o) { return o.salary.brut_salario; });
+    var avgArray = [];
+
+    for (var i = 0; i < 12; i++){
+      avgArray.push(avg);
+    }
+
+    return avgArray;
+}
+
+/*
+*  Create dataset for pie char
+*
+*/
+function createPieData(values) {
+
+    var totalArray = _.map(values, sum);
+    var total = _.sum(totalArray);
+
+    var data = [];
+    var labels = [];
+    var colors = [];
+
+    values.forEach(function(element, index) {
+        labels.push(element.no_usuario);
+        colors.push(setColor(index));
+
+        let value = percentage(totalArray[index], total).toFixed(2);
+
+        data.push(value);
+    });
+
+    return dataObject(data, colors, labels);
+}
+
+/**
+ * return dataset for pie chart
+ *
+ */
+function dataObject(data, colors, labels){
+
+    return {
+      'datasets': [{
+        'data' : data,
+        'backgroundColor': colors
+      }],
+      'labels' : labels
+    };
+}
+
+/*
+*  sum the invoices values
+*
+*/
+function sum(n) {
+  return _.sumBy(n.invoices, function(o) { return o.income; });
+}
+
+/**
+ *  calculate percentage
+ */
+function percentage(amount, total){
+    return (amount * 100) / total;
 }

@@ -85,6 +85,7 @@
     @if(request()->filled(['q', 'values']) && $invoices->count())
         @includeWhen(request()->q == 1, 'subviews.list_report')
         @includeWhen(request()->q == 2, 'subviews.grafic_bar')
+        @includeWhen(request()->q == 3, 'subviews.grafic_pie')
     @endif
 
 @endsection

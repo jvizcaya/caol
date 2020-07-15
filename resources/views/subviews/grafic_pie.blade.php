@@ -14,7 +14,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col-12">
-                  <canvas id="BarChart"></canvas>
+                  <canvas id="PieChart"></canvas>
               </div>
             </div>
           </div>
@@ -33,24 +33,19 @@
 <script>
 
 var data = @json($invoices);
-var ctx = document.getElementById('BarChart');
+var ctx = document.getElementById('PieChart');
 
 new Chart(ctx, {
-    type: 'bar',
-    data: {
-        xLabels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-        datasets: createBarData(data),
-    },
+    type: 'pie',
+    data: createPieData(data),
     options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-                callback: function(value, index, values) {
-                  return 'R$ ' + value;
-                }
-            }
-          }]
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItem, data) {
+            return data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]+' %' || '';
+          }
         }
+      }
     }
 });
 </script>
