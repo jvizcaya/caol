@@ -2,6 +2,11 @@
 
 @section('content')
 
+@php
+  list($start_year, $start_month) = explode('-', request()->input('start_at', '2017-1'));
+  list($end_year, $end_month) = explode('-', request()->input('end_at', '2017-12'));
+@endphp
+
 @section('header')
     @parent
     <!-- Content Header (Page header) -->
@@ -35,7 +40,7 @@
         </div>
       </div>
     </div>
-    {{ selected(6, request()->input('start_month', 6)) }}
+
     <section class="content">
       <div class="container-fluid">
         <div class="row">
@@ -49,7 +54,7 @@
                       <div class="col-sm-3 my-1">
                         <select class="form-control" id="start_month" autocomplete="off">
                           @for($i = 1; $i <= 12; $i ++)
-                          <option value="{{ $i }}" {{ selected($i, request()->input('start_month', 1)) }}>
+                          <option value="{{ $i }}" {{ selected($i, $start_month) }}>
                             {{ month_day($i) }}
                           </option>
                           @endfor
@@ -57,17 +62,17 @@
                       </div>
                       <div class="col-sm-3 my-1">
                         <select class="form-control" id="start_year" autocomplete="off">
-                          <option value="2007" {{ selected(2007, request()->input('start_year', 2007)) }}>2007</option>
-                          <option value="2006" {{ selected(2006, request()->input('start_year', 2007)) }}>2006</option>
-                          <option value="2005" {{ selected(2005, request()->input('start_year', 2007)) }}>2005</option>
-                          <option value="2004" {{ selected(2004, request()->input('start_year', 2007)) }}>2004</option>
-                          <option value="2003" {{ selected(2003, request()->input('start_year', 2007)) }}>2003</option>
+                          <option value="2007" {{ selected(2007, $start_year) }}>2007</option>
+                          <option value="2006" {{ selected(2006, $start_year) }}>2006</option>
+                          <option value="2005" {{ selected(2005, $start_year) }}>2005</option>
+                          <option value="2004" {{ selected(2004, $start_year) }}>2004</option>
+                          <option value="2003" {{ selected(2003, $start_year) }}>2003</option>
                         </select>
                       </div>
                       <div class="col-sm-3 my-1">
                         <select class="form-control" id="end_month" autocomplete="off">
                           @for($i = 1; $i <= 12; $i ++)
-                          <option value="{{ $i }}" {{ selected($i, request()->input('end_month', 12)) }}>
+                          <option value="{{ $i }}" {{ selected($i, $end_month) }}>
                             {{ month_day($i) }}
                           </option>
                           @endfor
@@ -75,11 +80,11 @@
                       </div>
                       <div class="col-sm-3 my-1">
                         <select class="form-control" id="end_year" autocomplete="off">
-                          <option value="2007" {{ selected(2007, request()->input('start_year', 2007)) }}>2007</option>
-                          <option value="2006" {{ selected(2006, request()->input('start_year', 2007)) }}>2006</option>
-                          <option value="2005" {{ selected(2005, request()->input('start_year', 2007)) }}>2005</option>
-                          <option value="2004" {{ selected(2004, request()->input('start_year', 2007)) }}>2004</option>
-                          <option value="2003" {{ selected(2003, request()->input('start_year', 2007)) }}>2003</option>
+                          <option value="2007" {{ selected(2007, $end_year) }}>2007</option>
+                          <option value="2006" {{ selected(2006, $end_year) }}>2006</option>
+                          <option value="2005" {{ selected(2005, $end_year) }}>2005</option>
+                          <option value="2004" {{ selected(2004, $end_year) }}>2004</option>
+                          <option value="2003" {{ selected(2003, $end_year) }}>2003</option>
                         </select>
                       </div>
                     </div>

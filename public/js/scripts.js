@@ -21,7 +21,9 @@ $(function () {
 
           var url = document.head.querySelector('meta[name="url"]').content+'/comercial_performance';
 
-          var params = '?q='+$(this).attr('data-operation')+'&values='+values;
+          var params = '?q='+$(this).attr('data-operation')+'&values='+values+
+                        '&start_at='+$('#start_year').val()+'-'+$('#start_month').val()+
+                        '&end_at='+$('#end_year').val()+'-'+$('#end_month').val();
 
           $(location).attr('href', url+params);
       }

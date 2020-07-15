@@ -101,12 +101,17 @@ class User extends Authenticatable
      {
           if(request()->filled(['q', 'values'])){
 
+            $start_at = now()->createFromFormat('Y-m', request()->input('start_at', '2007-1'))->firstOfMonth();
+            $end_at = now()->createFromFormat('Y-m', request()->input('end_at', '2007-12'))->lastOfMonth()->endOfDay();
+
             $query->whereIn('co_usuario', explode(',', request()->values))
-                  ->with(['invoices' => function ($q) {
+                  ->with(['invoices' => function ($q) use ($start_at, $end_at) {
                     $q->selectRaw('YEAR(data_emissao) as year')
                      ->selectRaw('MONTH(data_emissao) as month')
                      ->selectraw('SUM(valor - ((total_imp_inc / 100) * valor)) as income')
                      ->selectraw('SUM((comissao_cn / 100) * (valor - (total_imp_inc / 100) * total )) as commission')
+                     ->where('data_emissao', '>=', $start_at)
+                     ->where('data_emissao', '<=', $end_at)
                      ->groupBy('cao_os.co_usuario', 'year', 'month');
                 }]);
           }
