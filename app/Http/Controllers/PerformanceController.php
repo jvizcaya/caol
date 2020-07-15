@@ -16,12 +16,12 @@ class PerformanceController extends Controller
      */
     public function index()
     {
-            $users =  User::select('co_usuario','no_usuario')->whereHas('salary')
-                            ->with('salary:co_usuario,brut_salario')->role()->get();
+            $users =  User::select('co_usuario','no_usuario')->role()->whereHas('salary')
+                            ->with('salary:co_usuario,brut_salario')->get();
 
-            $invoices = User::select('co_usuario','no_usuario')->with('salary')
-                              ->loadInvoices()->get();
+            $invoices = User::select('co_usuario','no_usuario')->role()
+                              ->with('salary')->loadInvoices()->get();
 
-            return view('welcome', compact(['users', 'invoices']));
+            return view('performance', compact(['users', 'invoices']));
     }
 }

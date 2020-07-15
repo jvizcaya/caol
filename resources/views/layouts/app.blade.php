@@ -75,7 +75,7 @@
                 </a>
               </li>
               <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
+                <a href="#" class="{{ request()->is('comercial_performance') ? 'nav-link active' : 'nav-link'  }}">
                   <i class="nav-icon fas fa-handshake"></i>
                   <p>
                   Comercial
@@ -84,7 +84,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ url('comercial_performance') }}" class="nav-link">
                       <p>Permormance comercial</p>
                     </a>
                   </li>

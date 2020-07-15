@@ -19,7 +19,7 @@ $(function () {
 
       if(values != ''){
 
-          var url = document.head.querySelector('meta[name="url"]').content;
+          var url = document.head.querySelector('meta[name="url"]').content+'/comercial_performance';
 
           var params = '?q='+$(this).attr('data-operation')+'&values='+values;
 

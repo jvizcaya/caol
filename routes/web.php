@@ -13,4 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'PerformanceController@index');
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('comercial_performance', 'PerformanceController@index');

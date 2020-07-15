@@ -34,10 +34,17 @@
                         @foreach($user_data->invoices as $invoice)
                         <tr>
                           <td>{{ month_day($invoice->month).', '.$invoice->year }}</td>
-                          <td>{{ fn($invoice->income) }}</td>
+                          <td >{{ fn($invoice->income) }}</td>
                           <td>{{ fn($user_data->salary->brut_salario) }}</td>
                           <td>{{ fn($invoice->commission) }}</td>
-                          <td>{{ calculate_profit($invoice->income, $user_data->salary->brut_salario, $invoice->commission) }}</td>
+
+                          @php
+                            $profit = calculate_profit($invoice->income, $user_data->salary->brut_salario, $invoice->commission);
+                          @endphp
+
+                          <td class="{{ is_negative_class($profit) }}">
+                            {{ $profit }}
+                          </td>
                         </tr>
                         @endforeach
                         <tr class="table-secondary">

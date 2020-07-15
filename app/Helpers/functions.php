@@ -57,7 +57,7 @@ function month_day($month)
  */
 function fn($amount)
 {
-    return "R$ ".number_format($amount, 2, ',', '.');
+    return number_format($amount, 2, ',', '.');
 }
 
 /**
@@ -70,5 +70,37 @@ function calculate_profit($income, $salary, $commission)
 {
       $profit = $income - ($salary + $commission);
 
-      return fn($profit);  
+      return fn($profit);
+}
+
+/**
+ *  calculate is negative number
+ *  @param number $amount
+ *
+ * @return string  formatted amount with class
+ */
+function is_negative_class($amount)
+{
+      if($amount < 0){
+        return "text-danger";
+      }
+}
+
+/**
+ *  calculate is option select is selected
+ *
+ */
+function selected($value, $match)
+{
+      if(is_array($match))
+      {
+        if(in_array($value, $match))
+        {
+            return "selected";
+        }
+
+      }elseif($value == $match){
+
+          return "selected";
+      }
 }
