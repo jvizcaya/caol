@@ -89,29 +89,3 @@
     @endif
 
 @endsection
-
-@push('scripts')
-<script>
-  $(function () {
-    $('.duallistbox').bootstrapDualListbox({
-        infoText: false,
-        infoTextEmpty: ''
-    });
-
-    $('.process_btn').click(function(){
-
-        var values = $('#duallistbox').val();
-
-        if(values != ''){
-
-            var url = document.head.querySelector('meta[name="url"]').content;
-
-            var params = '?q='+$(this).attr('data-operation')+'&values='+values;
-
-            $(location).attr('href', url+params);
-        }
-    });
-
-  })
-</script>
-@endpush

@@ -1,3 +1,33 @@
+$(function () {
+
+  /**
+   *  Init bootstrapDualListbox plugin
+   *
+   */
+  $('.duallistbox').bootstrapDualListbox({
+      infoText: false,
+      infoTextEmpty: ''
+  });
+
+  /**
+   * redirect url with custom parameters
+   *
+   */
+  $('.process_btn').click(function(){
+
+      var values = $('#duallistbox').val();
+
+      if(values != ''){
+
+          var url = document.head.querySelector('meta[name="url"]').content;
+
+          var params = '?q='+$(this).attr('data-operation')+'&values='+values;
+
+          $(location).attr('href', url+params);
+      }
+  });
+
+});
 
 /*
 *  Create dataset for bar char
@@ -34,7 +64,7 @@ function createBarData(data) {
 function generateData(data){
 
     var values = [];
-    
+
     for (var i = 1; i <= 12; i++){
       let value = _.find(data, function(o) { return o.month == i; });
       let dataPush = value ? value.income.toFixed(2) : 0;
